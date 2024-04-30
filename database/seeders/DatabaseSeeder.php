@@ -29,6 +29,10 @@ class DatabaseSeeder extends Seeder
                 "descriptionRole" => "admin",
             ],
             [
+                "nameRole" => "CEO",
+                "descriptionRole" => "company manager",
+            ],
+            [
                 "nameRole" => "manager",
                 "descriptionRole" => "Manager",
             ],
