@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Establishment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,15 @@ return new class extends Migration
     {
         Schema::create('succursales', function (Blueprint $table) {
             $table->id();
+            $table->string('nameSuccursale');
+            $table->string('latitudeSuccursale')->nullable();
+            $table->string('longitudeSuccursale')->nullable();
+            $table->string('address')->default('');
+            $table->json('workers')->nullable();
+            $table->json('workingDays')->nullable();            
+            $table->foreignIdFor(Establishment::class)
+                            ->references('id')
+                            ->on('establishments');
             $table->timestamps();
         });
     }
