@@ -4,8 +4,10 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\SuccursaleController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\SaleController;
 use App\Http\Controllers\API\StockController;
 use App\Http\Middleware\AuthMiddleware;
+use App\Http\Middleware\saleProductMiddleware;
 use App\Http\Middleware\SingUpMiddleware;
 use App\Http\Middleware\storeCategoryMiddleware;
 use App\Http\Middleware\StoreProductMiddleware;
@@ -60,6 +62,12 @@ Route::prefix('v1')->group(function () {
         {
             Route::get("/{succursale_id}", [StockController::class, 'index']);
             Route::post("", [StockController::class, 'store'])->middleware(storeStockMiddleware::class);
+        });
+
+        Route::prefix("/sale")->group(function ()
+        {
+            // Route::get("/{succursale_id}", [StockController::class, 'index']);
+            Route::post("/{succursale_id}", [SaleController::class, 'store'])->middleware(saleProductMiddleware::class);
         });
     });
 

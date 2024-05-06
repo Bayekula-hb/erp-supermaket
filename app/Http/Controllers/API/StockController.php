@@ -21,6 +21,7 @@ class StockController extends Controller
                                 'stocks.quantity as quantity',
                                 'stocks.price as price',
                                 'stocks.expiryDate as expiryDate',
+                                'products.id as productId',
                                 'products.nameProduct as nameProduct',
                                 'products.imgProduct as imgProduct',
                                 'products.descriptionProduct as descriptionProduct',
