@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Stock;
 use Illuminate\Http\Request;
@@ -38,6 +39,54 @@ class StockController extends Controller
                 'error'=>false,
                 'message'=> 'The product recevied on successful', 
                 'data' => $products
+            ], 200); 
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error'=>true,
+                'message' => 'Request failed, please try again',
+                'data' => $e,
+            ], 400);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function productsByCategory(string $succursale_id)
+    {     
+        try {   
+            $categories = Category::all();
+            
+            $productCategory = [];
+
+            foreach($categories as $category){
+
+                $products = Stock::select(
+                                    'stocks.id as stock_id',
+                                    'stocks.quantity as quantity',
+                                    'stocks.price as price',
+                                    'stocks.expiryDate as expiryDate',
+                                    'products.id as productId',
+                                    'products.nameProduct as nameProduct',
+                                    'products.imgProduct as imgProduct',
+                                    'products.descriptionProduct as descriptionProduct',
+                                    'categories.nameCategory as nameCategory',
+                                    'categories.descriptionCategory as descriptionCategory',
+                                    'categories.imgCategory as imgCategory',
+                                )
+                                ->join('products', 'products.id', '=' , 'stocks.product_id')
+                                ->join('categories', 'categories.id', '=' , 'products.category_id')
+                                ->where('stocks.succursale_id', $succursale_id)
+                                ->where('categories.id', $category->id)
+                                ->get();
+                array_push($productCategory, [$category->nameCategory => $products]);
+            }
+
+            return response()->json([
+                'error'=>false,
+                'message'=> 'The product recevied on successful', 
+                'data' => $productCategory
             ], 200); 
 
         } catch (\Throwable $e) {

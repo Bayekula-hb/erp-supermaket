@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class StoreSuccuraleMiddleware
+class registerUserMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,13 +17,16 @@ class StoreSuccuraleMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $validated = Validator::make($request->all(), [
-
-            'nameSuccursale' => ['required', 'string','min:2', 'max:100'],
-            'latitudeSuccursale' => ['string','min:2', 'max:20'],
-            'longitudeSuccursale' => ['string','min:2', 'max:20'],
-            'address' => ['required', 'string','min:2'],
-            'workers' => ['string'],
-            'workingDays' => ['string'],
+            'firstName' => ['required', 'string','min:2', 'max:100'],
+            'middleName' => ['min:2', 'string','max:100'],
+            'lastName' => ['required', 'string','min:2', 'max:100'],
+            'userName' => ['required', 'string','min:2', 'max:100'],
+            'phoneNumber' => ['required', 'min:10', 'max:15'],
+            'email' => ['email', 'unique:users,email'],
+            'gender' => ['required', 'max:1', 'in:M,F'],
+            'password' => ['required','min:6'],
+            'role_id' => ['required', 'array'],
+            'succursale_id' => ['required', 'integer'],
         ]);
 
         if($validated->fails()){
