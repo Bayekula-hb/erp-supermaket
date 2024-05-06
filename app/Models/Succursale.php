@@ -23,7 +23,7 @@ class Succursale extends Model
         'address',
         'workers',
         'workingDays',
-        'etablishment_id',
+        'establishment_id',
     ];
 
     protected $hidden = [

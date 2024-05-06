@@ -55,6 +55,24 @@ class DatabaseSeeder extends Seeder
                 // 'created_at' => new DateTime(),
             ],
         ]);    
+
+        DB::table('categories')->insert([ 
+            [
+                'nameCategory' => 'beer',
+                'descriptionCategory' => 'bière',
+                'imgCategory' => asset('img/beer.jpg'),
+            ],
+            [
+                'nameCategory' => 'charcuterie',
+                'descriptionCategory' => 'charcuterie',
+                'imgCategory' => asset('img/charcuterie.jpg'),
+            ],
+            [
+                'nameCategory' => 'bread',
+                'descriptionCategory' => 'pain',
+                'imgCategory' => asset('img/bread.jpg'),
+            ],
+        ]);    
         
         DB::table('user_roles')->insert([
             [
